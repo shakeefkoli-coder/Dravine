@@ -1,0 +1,7 @@
+{
+  "name": "Dravine | Premium Footwear Studio",
+  "description": "Premium footwear brand located in Dehiwala, Sri Lanka. Step into style and walk with confidence.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
