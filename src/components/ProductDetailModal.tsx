@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   X, 
   Star, 
@@ -29,11 +29,9 @@ export const ProductDetailModal: React.FC = () => {
     addReviewToProduct
   } = useStore();
 
-  if (!selectedProduct) return null;
-
   const [activeImageIndex, setActiveImageIndex] = useState(0);
-  const [selectedSize, setSelectedSize] = useState<string>(selectedProduct.sizes[0] || 'UK 8');
-  const [selectedColor, setSelectedColor] = useState<ProductColor>(selectedProduct.colors[0] || { name: 'Standard', hex: '#ff6a00' });
+  const [selectedSize, setSelectedSize] = useState<string>('UK 8');
+  const [selectedColor, setSelectedColor] = useState<ProductColor>({ name: 'Standard', hex: '#ff6a00' });
   const [quantity, setQuantity] = useState(1);
   const [activeTab, setActiveTab] = useState<'details' | 'specs' | 'reviews'>('details');
 
@@ -45,6 +43,19 @@ export const ProductDetailModal: React.FC = () => {
   const [reviewComment, setReviewComment] = useState('');
   const [reviewFit, setReviewFit] = useState<'True to Size' | 'Runs Small' | 'Runs Large'>('True to Size');
   const [showReviewForm, setShowReviewForm] = useState(false);
+
+  useEffect(() => {
+    if (selectedProduct) {
+      setActiveImageIndex(0);
+      setSelectedSize(selectedProduct.sizes[0] || 'UK 8');
+      setSelectedColor(selectedProduct.colors[0] || { name: 'Standard', hex: '#ff6a00' });
+      setQuantity(1);
+      setActiveTab('details');
+      setShowReviewForm(false);
+    }
+  }, [selectedProduct?.id]);
+
+  if (!selectedProduct) return null;
 
   const wishlisted = isInWishlist(selectedProduct.id);
   const allImages = [selectedProduct.primaryImage, ...(selectedProduct.galleryImages || [])];
